@@ -4,5 +4,7 @@ import Vue from 'vue'
 // import 'vant/lib/index.css'
 // // 把vant中所有的组件都导入了
 // Vue.use(Vant)
-import { Button } from 'vant'
+import { Button, Tabbar, TabbarItem } from 'vant'
 Vue.use(Button)
+Vue.use(Tabbar)
+Vue.use(TabbarItem)
