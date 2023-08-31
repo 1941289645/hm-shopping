@@ -84,8 +84,9 @@ export default {
 
       // 当前没有定时器开着，且totalSencond===second,才能开启倒计时
       if (!this.timer && this.totalSencond === this.second) {
-        const res = await getMsgCode(this.picCode, this.picKey, this.mobile)
-        console.log(res)
+        await getMsgCode(this.picCode, this.picKey, this.mobile)
+
+        this.$toast('短信发送成功，注意查收')
         // 开启倒计时
         this.timer = setInterval(() => {
           this.second--
