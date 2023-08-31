@@ -8,38 +8,46 @@
         <h3>手机号登录</h3>
         <p>未注册的手机号登录后将自动注册</p>
       </div>
+
       <div class="form">
         <div class="form-item">
-          <input type="text" class="inp" placeholder="请输入手机号码" maxlength="11">
+          <input v-model="mobile" type="text" class="inp" placeholder="请输入手机号码" maxlength="11">
         </div>
         <div class="form-item">
-          <input class="inp" maxlength="5" placeholder="请输入图形验证码" type="text">
+          <input v-model="picCode" class="inp" maxlength="5" placeholder="请输入图形验证码" type="text">
           <img v-if="picUrl" :src="picUrl" alt="" @click="getPicCode">
         </div>
         <div class="form-item">
-          <input class="inp" placeholder="请输入短信验证码" type="text">
-          <button>获取验证码</button>
+          <input v-model="smsCode" class="inp" placeholder="请输入短信验证码" type="text">
+          <button @click="getCode">
+            {{ second===totalSencond ? '获取验证码' : second+'秒后重新发送'}}
+          </button>
         </div>
       </div>
-      <div class="login-btn">登录</div>
+      <div @click="login" class="login-btn">登录</div>
     </div>
   </div>
 </template>
 
 <script>
-import { getPicCode } from '@/api/login'
-import { Toast } from 'vant'
+import { getPicCode, getMsgCode, codeLogin } from '@/api/login'
 
 export default {
   name: 'LoginIndex',
   data () {
     return {
-      picCode: '', // 用户输入的图形验证码
       picKey: '', // 图形验证码的key
-      picUrl: '' // 图形验证码的地址
+      picUrl: '', // 图形验证码的地址
+      totalSencond: 60, // 倒计时总时间
+      second: 60, // 当前秒数，开定时器对其进行减1操作
+      timer: null, // 定时器id
+      mobile: '', // 手机号
+      picCode: '', // 用户输入的图形验证码
+      smsCode: '' // 用户输入的短信验证码
     }
   },
   created () {
+    // 获取图形验证码
     this.getPicCode()
   },
   methods: {
@@ -48,11 +56,69 @@ export default {
       this.picUrl = base64
       this.picKey = key
 
-      Toast({
-        message: '获取图形验证码成功',
-        duration: 1000
-      })
+      // Toast({
+      //   message: '获取图形验证码成功',
+      //   duration: 1000
+      // })
+    },
+
+    // 校验
+    validFn () {
+      if (!/^1[3-9]\d{9}$/.test(this.mobile)) {
+        this.$toast('请输入正确的手机号')
+        return false
+      }
+      if (!/^\w{4}$/.test(this.picCode)) {
+        this.$toast('请输入正确的图形验证码')
+        return false
+      }
+      return true
+    },
+
+    // 获取短信验证码
+    async getCode () {
+      if (!this.validFn()) {
+        // 校验不通过，直接返回
+        return
+      }
+
+      // 当前没有定时器开着，且totalSencond===second,才能开启倒计时
+      if (!this.timer && this.totalSencond === this.second) {
+        const res = await getMsgCode(this.picCode, this.picKey, this.mobile)
+        console.log(res)
+        // 开启倒计时
+        this.timer = setInterval(() => {
+          this.second--
+
+          if (this.second <= 0) {
+            clearInterval(this.timer)
+            this.timer = null
+            this.second = this.totalSencond
+          }
+        }, 1000)
+      }
+    },
+
+    async login () {
+      if (!this.validFn()) {
+        return
+      }
+
+      if (!/^\d{6}$/.test(this.smsCode)) {
+        this.$toast('请输入正确的短信验证码')
+        return
+      }
+
+      const res = await codeLogin(this.mobile, this.smsCode)
+      console.log(res)
+
+      this.$toast('登录成功')
+      this.$router.push('/')
     }
+  },
+
+  destroyed () {
+    clearInterval(this.timer)
   }
 }
 </script>
