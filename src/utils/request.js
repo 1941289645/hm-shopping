@@ -11,6 +11,13 @@ const instance = axios.create({
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
+  // 开启loading，禁止背景点击（节流处理，防止多次无效触发）
+  Toast.loading({
+    message: '加载中...',
+    forbidClick: true, // 禁止背景点击
+    duration: 0,
+    loadingType: 'spinner' // 配置loading图标
+  })
   return config
 }, function (error) {
   // 对请求错误做些什么
@@ -23,8 +30,14 @@ instance.interceptors.response.use(function (response) {
   // 对响应数据做点什么(默认axios会多包装一层data)
   const res = response.data
   if (res.status !== 200) {
+    // 给错误提示，Toast默认是单例模式，后面的Toast调用了，会将前一个Toast覆盖掉
+    // 同时只能存在一个Toast
     Toast.fail(res.message)
+    // 抛出一个错误promise
     return Promise.reject(res.message)
+  } else {
+    // 正确情况，直接走业务核心逻辑，清楚loading效果
+    Toast.clear()
   }
   return res
 }, function (error) {
