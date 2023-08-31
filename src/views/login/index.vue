@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <!-- 头部 -->
-      <van-nav-bar title="会员登陆" left-arrow @click-left="$router.go(-1)"></van-nav-bar>
+    <van-nav-bar title="会员登陆" left-arrow @click-left="$router.go(-1)"></van-nav-bar>
     <!-- 主体 -->
     <div class="container">
       <div class="title">
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import request from '@/utils/request'
+import { getPicCode } from '@/api/login'
 
 export default {
   name: 'LoginIndex',
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     async getPicCode () {
-      const { data: { base64, key } } = await request.get('/captcha/image')
+      const { data: { base64, key } } = await getPicCode()
       this.picUrl = base64
       this.picKey = key
     }
