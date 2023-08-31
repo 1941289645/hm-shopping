@@ -28,6 +28,7 @@
 
 <script>
 import { getPicCode } from '@/api/login'
+import { Toast } from 'vant'
 
 export default {
   name: 'LoginIndex',
@@ -46,6 +47,11 @@ export default {
       const { data: { base64, key } } = await getPicCode()
       this.picUrl = base64
       this.picKey = key
+
+      Toast({
+        message: '获取图形验证码成功',
+        duration: 1000
+      })
     }
   }
 }
