@@ -1,7 +1,7 @@
 # hm-shopping
  移动端购物App
 
-演示：[移动购物](https://1941289645.github.io/hm-shopping/)（打开浏览器控制面板切换页面尺寸）
+演示：[移动购物](https://1941289645.github.io/hm-shopping/)（打开浏览器控制面板切换页面尺寸，后端服务器问题，目前不能在线访问）
 
 
 
