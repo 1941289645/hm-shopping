@@ -1,7 +1,27 @@
 # hm-shopping
  移动端购物App
 
+演示：[移动购物](https://1941289645.github.io/hm-shopping/)
 
+## 项目展示：
+
+首页：
+
+<img src="assets/image-20230905114432789.png" alt="image-20230905114432789" style="zoom:67%;" />
+
+商品分类页：
+
+<img src="assets/image-20230905114451236.png" alt="image-20230905114451236" style="zoom:67%;" />
+
+搜索列表页：
+
+<img src="assets/image-20230905114627497.png" alt="image-20230905114627497" style="zoom:67%;" />
+
+商品详情页：
+
+<img src="assets/image-20230905114645782.png" alt="image-20230905114645782" style="zoom:67%;" />
+
+……
 
 ## 功能模块
 
