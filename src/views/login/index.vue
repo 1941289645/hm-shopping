@@ -31,7 +31,6 @@
 
 <script>
 import { getPicCode, getMsgCode, codeLogin } from '@/api/login'
-
 export default {
   name: 'LoginIndex',
   data () {
@@ -115,7 +114,10 @@ export default {
       console.log(res)
 
       this.$toast('登录成功')
-      this.$router.push('/')
+
+      // 进行判断，看地址栏有无跳回地址
+      const url = this.$route.query.backUrl || '/'
+      this.$router.replace(url)
     }
   },
 

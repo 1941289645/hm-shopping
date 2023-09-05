@@ -4,7 +4,7 @@ import Vue from 'vue'
 // import 'vant/lib/index.css'
 // // 把vant中所有的组件都导入了
 // Vue.use(Vant)
-import { Button, Tabbar, TabbarItem, NavBar, Toast, Search, Swipe, SwipeItem, Grid, GridItem, Icon, rate } from 'vant'
+import { Button, Tabbar, TabbarItem, NavBar, Toast, Search, Swipe, SwipeItem, Grid, GridItem, Icon, rate, ActionSheet, Dialog, Checkbox, Tab, Tabs } from 'vant'
 Vue.use(Button)
 Vue.use(Tabbar)
 Vue.use(TabbarItem)
@@ -17,3 +17,8 @@ Vue.use(SwipeItem)
 Vue.use(Grid)
 Vue.use(Icon)
 Vue.use(rate)
+Vue.use(ActionSheet)
+Vue.use(Dialog)
+Vue.use(Checkbox)
+Vue.use(Tab)
+Vue.use(Tabs)

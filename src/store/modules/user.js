@@ -14,7 +14,13 @@ export default {
     }
   },
   actions: {
+    logout (context) {
+      // 个人信息要重置
+      context.commit('setUserInfo', {})
 
+      // 购物车信息重置(跨模块调用mutations)
+      context.commit('cart/setCartList', [], { root: true })
+    }
   },
   getters: {
 

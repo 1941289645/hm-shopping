@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
+import Layout from '@/views/layout'
+import Home from '@/views/layout/home'
+import Category from '@/views/layout/category'
+import Cart from '@/views/layout/cart'
+import User from '@/views/layout/user'
 
 Vue.use(VueRouter)
 
@@ -8,13 +13,13 @@ const routes = [
   { path: '/login', component: () => import('@/views/login') },
   {
     path: '/',
-    component: () => import('@/views/layout'),
+    component: Layout,
     redirect: '/home',
     children: [
-      { path: '/home', component: () => import('@/views/layout/home.vue') },
-      { path: '/category', component: () => import('@/views/layout/category.vue') },
-      { path: '/cart', component: () => import('@/views/layout/cart.vue') },
-      { path: '/user', component: () => import('@/views/layout/user.vue') }
+      { path: '/home', component: Home },
+      { path: '/category', component: Category },
+      { path: '/cart', component: Cart },
+      { path: '/user', component: User }
     ]
   },
   { path: '/search', component: () => import('@/views/search') },
@@ -29,7 +34,7 @@ const router = new VueRouter({
 })
 
 // 定义一个数组，专门用户存放所有需要访问的页面
-const authUrls = ['/cart', '/user', '/pay', '/myorder']
+const authUrls = ['/pay', '/myorder']
 
 // 全局前置导航守卫
 // 1. to  往哪里去， 到哪去的路由信息对象
